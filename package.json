@@ -1,0 +1,18 @@
+{
+  "name": "kusamaspots",
+  "version": "1.0.0",
+  "description": "Spots, spots, everywhere spots!",
+  "main": "sketch.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Iain",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "chai": "^6.2.2"
+  }
+}
