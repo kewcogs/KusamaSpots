@@ -11,7 +11,7 @@ const sketch  = (p) => {
 
     p.setup = () => {
         engine = Engine.create({gravity:{scale: 0}})
-        p.createCanvas(p.windowWidth -10, p.windowHeight-10);
+        p.createCanvas(p.windowWidth, p.windowHeight);
         spots = arrangedSpots(11, 0.001/p.height);
         Composite.add(engine.world, spots.map((s) => s.body));
     }
@@ -34,7 +34,6 @@ const sketch  = (p) => {
 
     p.mouseReleased = () => {
         if(selectedSpot != null) {
-            //p.print(forceReport(selectedSpot))
             Body.setStatic(selectedSpot.body, false)
         }
         selectedSpot = null
@@ -110,7 +109,7 @@ const sketch  = (p) => {
             let s = spots[c]
             let ss
 
-            // connect top spot in column to anchor
+            // connect top spot in column to anchor along top edge
             Spring.connect(s, new Anchor(s.x(), 0), springStiffness) 
             for(let cc = c; cc < spots.length; cc += cols){
                 // connect spots to row above
@@ -118,7 +117,7 @@ const sketch  = (p) => {
                 Spring.connect(s, ss, springStiffness)
                 s = ss
             }
-            // Spring.connect(spots[c + cols*(rows - 1)], new Anchor(spots[c].x(), p.height), springStiffness)
+            // connect bottom spot to anchor below on bottom edge
             Spring.connect(s, new Anchor(s.x(), p.height), springStiffness)
         }
 
