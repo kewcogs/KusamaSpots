@@ -4,7 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KusamaSpots</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@2.2.3/lib/p5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
+    <script type="module">
+      import runSketch from "./sketch.js"
+      // function reportSizeById(id){
+      //   let elt = document.getElementById(id)
+      //   let rect = elt.getBoundingClientRect()
+      //   window.alert(`width: ${rect.width}, height: ${rect.height}`)
+      // }
+      // window.alert("Alert")
+      window.addEventListener ("load", (evt) => {
+        // reportSizeById("sketch-box")
+        let sb =  document.getElementById("sketch-box")
+        let rect = sb.getBoundingClientRect()
+        runSketch(rect.width, rect.height * 0.99, sb)
+      })
+
+
+    </script>
+
 </head>
 <body>
     <h1>Yayoi Kusama <span>1929 - 2026</span></h1>
@@ -29,6 +49,9 @@
       </select>
       <input type="button" id="refreshbtn" value="Refresh"/>
     </form> -->
-    <iframe src="spots.html" title="spots" id="spotsframe" />
+    <p id="sketch-box">
+      <!-- <script src="sketch.js" type="module"></script> -->
+    </p>
+    <!-- <iframe src="spots.html" title="spots" id="spotsframe" /> -->
 </body>
 </html>
