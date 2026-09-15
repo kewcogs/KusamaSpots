@@ -4,11 +4,19 @@ import {Spring, Anchor, Attachment} from './spring.js';
 import {Vector} from './vector2D.js'
 const {Engine, Body, Bodies, Composite} = Matter;
 
+let spots = []
+let dim = 11  // number of spots along long side 
 
-export default function (w, h, parentNode = null){
+export function restartSketch(n) {
+    dim = n
+    spots = []
+}
+
+export function runSketch(w, h, parentNode = null){
+    
     const sketch  = (p) => {
         let engine;
-        let spots;
+        // let spots;
         let selectedSpot = null
 
         p.setup = () => {
@@ -19,11 +27,16 @@ export default function (w, h, parentNode = null){
             } else {
                 p.createCanvas(p.windowWidth, p.windowHeight);
             }
-            spots = arrangedSpots(11, 0.001/p.height);
-            Composite.add(engine.world, spots.map((s) => s.body));
+            // spots = arrangedSpots(11, 0.001/p.height);
+            // Composite.add(engine.world, spots.map((s) => s.body));
         }
 
         p.draw = () => {
+            if (spots.length == 0){
+                Composite.clear(engine.world, false)
+                spots = arrangedSpots(dim, 0.001/p.height);
+                Composite.add(engine.world, spots.map((s) => s.body));
+            }
             Engine.update(engine);
             p.background(60);
             spots.forEach((s) => {
@@ -154,6 +167,7 @@ export default function (w, h, parentNode = null){
             p.pop()
         }
     }
+
 
     new p5(sketch)
 }

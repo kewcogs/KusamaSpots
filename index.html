@@ -8,50 +8,50 @@
     <script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <script type="module">
-      import runSketch from "./sketch.js"
-      // function reportSizeById(id){
-      //   let elt = document.getElementById(id)
-      //   let rect = elt.getBoundingClientRect()
-      //   window.alert(`width: ${rect.width}, height: ${rect.height}`)
-      // }
-      // window.alert("Alert")
+      import {runSketch, restartSketch} from "./sketch.js"
       window.addEventListener ("load", (evt) => {
-        // reportSizeById("sketch-box")
-        let sb =  document.getElementById("sketch-box")
-        let rect = sb.getBoundingClientRect()
-        runSketch(rect.width, rect.height * 0.99, sb)
+
+        document.getElementById("refreshbtn").onclick = () => {
+          let n = document.getElementById("numspots").value
+          restartSketch(Number(n))
+        }
+
+        let sbx =  document.getElementById("sketch-box")
+        let rect = sbx.getBoundingClientRect()
+        runSketch(rect.width, rect.height * 0.99, sbx)
       })
-
-
     </script>
 
 </head>
 <body>
     <h1>Yayoi Kusama <span>1929 - 2026</span></h1>
-    <!-- <form>
+    <form>
       <label>Spots:</label>
-      <select name="numspots" id="num_spots">
+      <select id="numspots">
         <option value="1">1</option> 
         <option value="2">2</option> 
         <option value="3">3</option> 
         <option value="4">4</option> 
         <option value="5">5</option> 
         <option value="6">6</option> 
-        <option value="7" selected>7</option> 
+        <option value="7">7</option> 
         <option value="8">8</option> 
         <option value="9">9</option> 
         <option value="10">10</option>
-        <option value="11">11</option>
+        <option value="11" selected>11</option>
         <option value="12">12</option>
         <option value="13">13</option>
         <option value="14">14</option>
         <option value="15">15</option>
       </select>
       <input type="button" id="refreshbtn" value="Refresh"/>
-    </form> -->
-    <p id="sketch-box">
-      <!-- <script src="sketch.js" type="module"></script> -->
-    </p>
-    <!-- <iframe src="spots.html" title="spots" id="spotsframe" /> -->
+    </form>
+    <div id="sketch-box">
+      <!-- <div id="sketch-box" /> -->
+      <!-- <p class="overlay" id="blurb">
+        This kinetic image is my simple homage to Yayoi Kusama who died on the 14th August 2026. 
+        It was inspired by my visit to her Tate Modern exhibition in 2013.
+      </p> -->
+    </div>
 </body>
 </html>
