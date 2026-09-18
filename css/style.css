@@ -29,6 +29,12 @@ h1 span {
     font-size: 0.3em;
 }
 
+#topnav {
+    position: absolute;
+    top:0;
+    right: 0;
+}
+
 #sketch-box{
     /* background-color: blueviolet; */
     flex: 1;
@@ -40,8 +46,6 @@ h1 span {
 
 .overlay {
     z-index: 2;
-    opacity: 0.75;
-    background-color: #10101070;
     position: absolute;
     margin-top: 20px;
     margin-left: 10%;
@@ -50,16 +54,28 @@ h1 span {
     /* visibility: collapse; */
 }
 
+.overlay div {
+    opacity: 0.75;
+    background-color: #10101070;
+}
+
+#showblurb {
+    user-select: none;
+}
 #blurb{
     user-select: none;
     font-size: 1.4em;
     font-weight: lighter;
 }
-
-#blurb p+p{
+/* #blurb p+p{ */
+#blurb p{
     margin-top: 20px;  /*space between paragraphs within blurb */
 }
-
 #blurb a {
     color: white;
+}
+#closeblurb {
+    position: absolute;
+    right: 0;
+    top: 0;
 }
