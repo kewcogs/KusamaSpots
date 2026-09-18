@@ -66,9 +66,10 @@ h1 span {
     user-select: none;
     font-size: 1.4em;
     font-weight: lighter;
+    display: none;
 }
-/* #blurb p+p{ */
-#blurb p{
+#blurb p+p{
+/* #blurb p{ */
     margin-top: 20px;  /*space between paragraphs within blurb */
 }
 #blurb a {

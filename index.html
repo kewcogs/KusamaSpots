@@ -13,10 +13,11 @@
 
       function toggleBlurb() {
         let blurb = document.getElementById("blurb")
-        if (blurb.style.display === "none"){
-          blurb.style.display = "block"
-        } else {
+        let dis = blurb.style.display
+        if (blurb.style.display === "block"){
           blurb.style.display = "none"
+        } else {
+          blurb.style.display = "block"
         }
       }
 
