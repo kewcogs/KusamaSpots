@@ -13,7 +13,6 @@ body {
     flex-direction: column;
     color: white;
     background: #101010;
-    /* font-size: 16px; */
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -42,12 +41,11 @@ h1 span {
 }
 
 #controlbar {
-    display: none;
+    display: none; 
     margin: 20px;
 }
 
 #sketch-box{
-    /* background-color: blueviolet; */
     flex: 1;
     width: 100%;
     display: block;
@@ -76,6 +74,12 @@ h1 span {
         margin-right: 5%;
         padding: 1%;
     }
+}
+
+#refreshbtn {
+    border-radius: 12px;
+    font-size: 16px;
+    padding: 5px 10px;
 }
 
 
