@@ -23,4 +23,10 @@ export class Spot extends Attachment{
   moveTo (newX, newY) {
     Matter.Body.setPosition(this.body, {x: newX, y: newY})
   }
+
+  covers (x, y) {
+    
+  }
+
+  
 }

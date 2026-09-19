@@ -16,8 +16,8 @@ export function runSketch(w, h, parentNode = null){
     
     const sketch  = (p) => {
         let engine;
-        // let spots;
         let selectedSpot = null
+        let pressStart = 0
 
         p.setup = () => {
             engine = Engine.create({gravity:{scale: 0}})
@@ -27,17 +27,17 @@ export function runSketch(w, h, parentNode = null){
             } else {
                 p.createCanvas(p.windowWidth, p.windowHeight);
             }
-            // spots = arrangedSpots(11, 0.001/p.height);
-            // Composite.add(engine.world, spots.map((s) => s.body));
         }
 
         p.draw = () => {
+            // check if new spots need to be generated, either after startup or a restart
             if (spots.length == 0){
                 Composite.clear(engine.world, false)
                 spots = arrangedSpots(dim, 0.001/p.height);
                 Composite.add(engine.world, spots.map((s) => s.body));
             }
-            Engine.update(engine);
+
+            Engine.update(engine);   
             p.background(60);
             spots.forEach((s) => {
                 Body.applyForce(s.body, s.body.position, s.netForce())
@@ -46,7 +46,9 @@ export function runSketch(w, h, parentNode = null){
         }
 
         p.mousePressed = () => {
-            selectedSpot = spotAt(spots, p.mouseX, p.mouseY)
+            pressStart = p.millis()
+            // selectedSpot = spotAt(spots, p.mouseX, p.mouseY)
+            selectedSpot = closestSpotTo(spots, p.mouseX, p.mouseY)
             if(selectedSpot != null){
                 Body.setStatic(selectedSpot.body, true)
             }
@@ -65,7 +67,6 @@ export function runSketch(w, h, parentNode = null){
                 selectedSpot.moveTo(p.mouseX, p.mouseY);
             }
         }
-
 
         const forceReport = (a) => {
             let report = `Forces on (${a.x().toFixed(1)},${a.y().toFixed(1)}): `
@@ -97,6 +98,21 @@ export function runSketch(w, h, parentNode = null){
                 }
             }
             return null;
+        }
+
+        // returns the spot whose centre is closest to position (x, y)
+        const closestSpotTo = (spots, x, y) => {
+            let closestDist = Infinity
+            let closestSpot = null
+            for(const s in spots){
+                let spot = spots[s];
+                let dist = p.dist(x, y, spot.x(), spot.y())
+                if(dist < closestDist){
+                    closestDist = dist
+                    closestSpot = spot
+                }
+            }
+            return closestSpot
         }
 
         const  arrangedSpots = (majorCount, springStiffness) => {
