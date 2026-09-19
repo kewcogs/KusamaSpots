@@ -13,7 +13,7 @@ body {
     flex-direction: column;
     color: white;
     background: #101010;
-    font-size: 12px;
+    /* font-size: 16px; */
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -29,10 +29,20 @@ h1 span {
     font-size: 0.3em;
 }
 
+#topbar {
+    position: relative;
+}
+
 #topnav {
+    user-select: none;
     position: absolute;
-    top:0;
-    right: 0;
+    color: bisque;
+    bottom:0;
+    right: 2%;
+}
+
+#controlbar {
+    display: none;
 }
 
 #sketch-box{
@@ -47,16 +57,30 @@ h1 span {
 .overlay {
     z-index: 2;
     position: absolute;
-    margin-top: 20px;
-    margin-left: 10%;
-    margin-right: 10%;
-    padding: 1%;
-    /* visibility: collapse; */
 }
 
+@media (orientation: landscape) {
+    .overlay {
+        margin-top: 20px;
+        margin-left: 10%;
+        margin-right: 10%;
+        padding: 1%;
+    }
+}
+
+@media (orientation: portrait) {
+    .overlay {
+        margin-top: 10px;
+        margin-left: 5%;
+        margin-right: 5%;
+        padding: 1%;
+    }
+}
+
+
 .overlay div {
-    opacity: 0.75;
-    background-color: #10101070;
+    opacity: 1;
+    background-color: #101010B2;
 }
 
 #showblurb {
@@ -64,19 +88,26 @@ h1 span {
 }
 #blurb{
     user-select: none;
-    font-size: 1.4em;
-    font-weight: lighter;
+    /* font-size: 1.2em; */
+    /* font-size: 2em; */
+    /* font-weight: lighter; */
     display: none;
+    /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
+}
+#blurbtext {
+    padding-left: 20px;
+    padding-top: 20px;
 }
 #blurb p+p{
 /* #blurb p{ */
     margin-top: 20px;  /*space between paragraphs within blurb */
 }
 #blurb a {
-    color: white;
+    color: bisque;
 }
-#closeblurb {
+#blurbclose {
     position: absolute;
-    right: 0;
+    /* pointer-events: none; */
+    left: 0;
     top: 0;
 }

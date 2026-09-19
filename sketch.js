@@ -1,7 +1,6 @@
 
 import {Spot} from './spot.js';
-import {Spring, Anchor, Attachment} from './spring.js';
-import {Vector} from './vector2D.js'
+import {Spring, Anchor} from './spring.js';
 const {Engine, Body, Bodies, Composite} = Matter;
 
 let spots = []
@@ -17,7 +16,7 @@ export function runSketch(w, h, parentNode = null){
     const sketch  = (p) => {
         let engine;
         let selectedSpot = null
-        let pressStart = 0
+        // let pressStart = 0
 
         p.setup = () => {
             engine = Engine.create({gravity:{scale: 0}})
@@ -33,7 +32,7 @@ export function runSketch(w, h, parentNode = null){
             // check if new spots need to be generated, either after startup or a restart
             if (spots.length == 0){
                 Composite.clear(engine.world, false)
-                spots = arrangedSpots(dim, 0.001/p.height);
+                spots = spotGrid(dim, 0.001/p.height);
                 Composite.add(engine.world, spots.map((s) => s.body));
             }
 
@@ -46,9 +45,14 @@ export function runSketch(w, h, parentNode = null){
         }
 
         p.mousePressed = () => {
-            pressStart = p.millis()
+            // pressStart = p.millis()
             // selectedSpot = spotAt(spots, p.mouseX, p.mouseY)
-            selectedSpot = closestSpotTo(spots, p.mouseX, p.mouseY)
+
+            // try to select closest spot - but only if the mouse pointer is within the canvas
+            if(p.mouseX >= 0 && p.mouseY >= 0 && p.mouseX < p.width && p.mouseY < p.height){
+                selectedSpot = closestSpotTo(spots, p.mouseX, p.mouseY)
+            }
+
             if(selectedSpot != null){
                 Body.setStatic(selectedSpot.body, true)
             }
@@ -115,7 +119,7 @@ export function runSketch(w, h, parentNode = null){
             return closestSpot
         }
 
-        const  arrangedSpots = (majorCount, springStiffness) => {
+        const  spotGrid = (majorCount, springStiffness) => {
             let rows,cols;
             if (p.width > p.height ) {
                 cols = majorCount;

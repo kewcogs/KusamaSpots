@@ -7,17 +7,28 @@
     <script src="https://cdn.jsdelivr.net/npm/p5@2.2.3/lib/p5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=more_vert,close,info" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=refresh,unfold_more,unfold_less,close,info" />
     <script type="module">
       import {runSketch, restartSketch} from "./sketch.js"
 
       function toggleBlurb() {
         let blurb = document.getElementById("blurb")
-        let dis = blurb.style.display
         if (blurb.style.display === "block"){
           blurb.style.display = "none"
         } else {
           blurb.style.display = "block"
+        }
+      }
+
+      function toggleMore() {
+        let controlbar = document.getElementById("controlbar")
+        let showButton = document.getElementById("showmore")
+        if (controlbar.style.display === "block"){
+          controlbar.style.display = "none"
+          showButton.textContent = "unfold_more"
+        } else {
+          controlbar.style.display = "block"
+          showButton.textContent = "unfold_less"
         }
       }
 
@@ -28,8 +39,9 @@
           restartSketch(Number(n))
         }
 
-        document.getElementById("closeblurb").onclick = toggleBlurb
-        document.getElementById("showblurb").onclick = toggleBlurb
+        document.getElementById("blurbclose").onclick = toggleBlurb
+        document.getElementById("blurbshow").onclick = toggleBlurb
+        document.getElementById("showmore").onclick = toggleMore
 
         let sbx =  document.getElementById("sketch-box")
         let rect = sbx.getBoundingClientRect()
@@ -39,11 +51,14 @@
 
 </head>
 <body>
+  <div id="topbar">
     <h1>Yayoi Kusama <span>1929 - 2026</span></h1>
     <span id="topnav">
-      <span  id="showblurb" class="material-symbols-outlined md-light" style="color: bisque;">info</span>
-      <span  id="showmore" class="material-symbols-outlined md-light">more_vert</span>        
+      <span  id="blurbshow" class="material-symbols-outlined md-light">info</span>
+      <span  id="showmore" class="material-symbols-outlined md-light">unfold_more</span>        
     </span>
+  </div>
+  <div id="controlbar">
     <form>
       <label>Spots:</label>
       <select id="numspots">
@@ -65,10 +80,11 @@
       </select>
       <input type="button" id="refreshbtn" value="Refresh"/>
     </form>
+  </div>
     <div id="sketch-box">
       <!-- <div id="sketch-box" /> -->
       <div class="overlay" id="blurb">
-        <div id="blubtext">
+        <div id="blurbtext">
           <p>
             This kinetic image is my simple homage to 
             <a href="https://en.wikipedia.org/wiki/Yayoi_Kusama"target="_blank" rel="noopener noreferrer">Yayoi Kusama</a> 
@@ -84,7 +100,7 @@
             across the screen. The more contemplative you may find more subtle disturbances restful, even hypnotic.
           </p>
         </div>
-        <div id="closeblurb" class="material-symbols-outlined md-light" style="font-size: 48px;">close</div>
+        <div id="blurbclose" class="material-symbols-outlined md-light">close</div>
       </div>
     </div>
 </body>
