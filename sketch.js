@@ -1,14 +1,16 @@
 
 import {Spot} from './spot.js';
 import {Spring, Anchor} from './spring.js';
-const {Engine, Body, Bodies, Composite} = Matter;
+const {Engine, Body, Composite} = Matter;
 
 let spots = []
 let dim = 11  // number of spots along long side 
 
+const StiffnessCoefficient = 2e-9   // base number for calculating spring stiffness 'k'
+
 export function restartSketch(n) {
     dim = n
-    spots = []
+    spots = []    // trigger regeneration of spots on next draw()
 }
 
 export function runSketch(w, h, n, parentNode = null){
@@ -16,7 +18,6 @@ export function runSketch(w, h, n, parentNode = null){
     const sketch  = (p) => {
         let engine;
         let selectedSpot = null
-        // let pressStart = 0
 
         p.setup = () => {
             dim = n
@@ -46,9 +47,6 @@ export function runSketch(w, h, n, parentNode = null){
         }
 
         p.mousePressed = () => {
-            // pressStart = p.millis()
-            // selectedSpot = spotAt(spots, p.mouseX, p.mouseY)
-
             // try to select closest spot - but only if the mouse pointer is within the canvas
             if(p.mouseX >= 0 && p.mouseY >= 0 && p.mouseX < p.width && p.mouseY < p.height){
                 selectedSpot = closestSpotTo(spots, p.mouseX, p.mouseY)
@@ -72,26 +70,6 @@ export function runSketch(w, h, n, parentNode = null){
                 selectedSpot.moveTo(p.mouseX, p.mouseY);
             }
         }
-
-        const forceReport = (a) => {
-            let report = `Forces on (${a.x().toFixed(1)},${a.y().toFixed(1)}): `
-            // report = report.concat(`{${a.forces()}}`)
-            let forces = a.forces() //a.springs.map((s) => s.forceOn(a))
-            forces.forEach((f) => {
-                report = report.concat(`{x: ${f.x.toFixed(3)}, y: ${f.y.toFixed(3)}] `)
-            })
-        
-            // report = report.concat(forces)
-            // a.springs.forEach((sp) => {
-            //     let f = sp.forceOn(a)
-            //     report = report.concat(`{x: ${f.x.toFixed(1)}, y: ${f.y.toFixed(1)}] `)
-            // } )
-            let netF = a.netForce()
-            report = report.concat(`Net force: {x: ${netF.x.toFixed(3)}, y: ${netF.y.toFixed(3)}`)
-            return report
-        }
-
-
 
         // returns the first spot in 'spots' which covers position (x,y)
         //  or null if no such spot
@@ -120,7 +98,10 @@ export function runSketch(w, h, n, parentNode = null){
             return closestSpot
         }
 
-        const  spotGrid = (majorCount, springStiffness) => {
+        const  spotGrid = (majorCount) => {
+
+            let k
+
             let rows,cols;
             if (p.width > p.height ) {
                 cols = majorCount;
@@ -135,6 +116,9 @@ export function runSketch(w, h, n, parentNode = null){
             const rowOffset = (p.height - 2*spotSize*(rows - 1)) / 2;
             const colOffset = (p.width - 2*spotSize*(cols - 1)) / 2;
             const spacing = spotSize * 2
+
+
+            k = StiffnessCoefficient * spotSize**2
 
             let spots = [];
             for(let r = 0; r < rows; r++){
@@ -151,15 +135,15 @@ export function runSketch(w, h, n, parentNode = null){
                 let ss
 
                 // connect top spot in column to anchor along top edge
-                Spring.connect(s, new Anchor(s.x(), 0), springStiffness) 
+                Spring.connect(s, new Anchor(s.x(), 0), k) 
                 for(let cc = c; cc < spots.length; cc += cols){
                     // connect spots to row above
                     ss = spots[cc]
-                    Spring.connect(s, ss, springStiffness)
+                    Spring.connect(s, ss, k)
                     s = ss
                 }
                 // connect bottom spot to anchor below on bottom edge
-                Spring.connect(s, new Anchor(s.x(), p.height), springStiffness)
+                Spring.connect(s, new Anchor(s.x(), p.height), k)
             }
 
             // connect all spots in a row
@@ -168,14 +152,14 @@ export function runSketch(w, h, n, parentNode = null){
                 let ss 
 
                 // connect left-most spot to anchor
-                Spring.connect(s, new Anchor(0, s.y()), springStiffness) 
+                Spring.connect(s, new Anchor(0, s.y()), k) 
                 for(let c = 0; c < cols; c++){
                     ss = spots[r * cols + c]
-                    Spring.connect(s, ss, springStiffness)
+                    Spring.connect(s, ss, k)
                     s = ss
                 }
                 // connect right-most spot to anchor
-                Spring.connect(s, new Anchor(p.width, s.y()), springStiffness)
+                Spring.connect(s, new Anchor(p.width, s.y()), k)
             }
             return spots;
         }

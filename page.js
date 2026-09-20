@@ -13,14 +13,6 @@ function toggleDisplay(id){
 
 const toggleBlurb = toggleDisplay("blurb")
 const toggleQR = toggleDisplay("qrcode")
-// function toggleBlurb() {
-//   let blurb = document.getElementById("blurb")
-//   if (blurb.style.display === "block"){
-//     blurb.style.display = "none"
-//   } else {
-//     blurb.style.display = "block"
-//   }
-// }
 
 function toggleMore() {
   let controlbar = document.getElementById("controlbar")
@@ -39,13 +31,6 @@ function getNumSpots() {
 }
 
 window.addEventListener ("load", (evt) => {
-
-  // document.getElementById("refreshbtn").onclick = () => {
-  //   // let n = document.getElementById("numspots").value
-  //   toggleMore()
-  //   // restartSketch(Number(n))
-  //   restartSketch(getNumSpots())
-  // }
 
   document.getElementById("blurbclose").onclick = toggleBlurb
   document.getElementById("blurbshow").onclick = toggleBlurb
