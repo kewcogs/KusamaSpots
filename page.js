@@ -40,18 +40,22 @@ function getNumSpots() {
 
 window.addEventListener ("load", (evt) => {
 
-  document.getElementById("refreshbtn").onclick = () => {
-    // let n = document.getElementById("numspots").value
-    toggleMore()
-    // restartSketch(Number(n))
-    restartSketch(getNumSpots())
-  }
+  // document.getElementById("refreshbtn").onclick = () => {
+  //   // let n = document.getElementById("numspots").value
+  //   toggleMore()
+  //   // restartSketch(Number(n))
+  //   restartSketch(getNumSpots())
+  // }
 
   document.getElementById("blurbclose").onclick = toggleBlurb
   document.getElementById("blurbshow").onclick = toggleBlurb
   document.getElementById("showmore").onclick = toggleMore
   document.getElementById("qrbutton").onclick = toggleQR
   document.getElementById("qrclose").onclick = toggleQR
+
+  document.getElementById("numspots").oninput = () => {
+    restartSketch(getNumSpots())
+  }
 
   let sbx =  document.getElementById("sketch-box")
   let rect = sbx.getBoundingClientRect()
