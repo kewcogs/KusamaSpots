@@ -8,58 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=refresh,unfold_more,unfold_less,close,info,more_horiz,more_vert" />
-    <script type="module">
-      import {runSketch, restartSketch} from "./sketch.js"
-
-      // const moreIcon = "more_horiz"
-      // const lessIcon = "more_vert"
-      const moreIcon = "unfold_more"
-      const lessIcon = "unfold_less"
-
-      function toggleBlurb() {
-        let blurb = document.getElementById("blurb")
-        if (blurb.style.display === "block"){
-          blurb.style.display = "none"
-        } else {
-          blurb.style.display = "block"
-        }
-      }
-
-      function toggleMore() {
-        let controlbar = document.getElementById("controlbar")
-        let showButton = document.getElementById("showmore")
-        if (controlbar.style.display === "block"){
-          controlbar.style.display = "none"
-          showButton.textContent = "more_horiz"
-        } else {
-          controlbar.style.display = "block"
-          showButton.textContent = "more_vert"
-        }
-      }
-
-      function getNumSpots() {
-          return Number(document.getElementById("numspots").value)
-      }
-
-      window.addEventListener ("load", (evt) => {
-
-        document.getElementById("refreshbtn").onclick = () => {
-          // let n = document.getElementById("numspots").value
-          toggleMore()
-          // restartSketch(Number(n))
-          restartSketch(getNumSpots())
-        }
-
-        document.getElementById("blurbclose").onclick = toggleBlurb
-        document.getElementById("blurbshow").onclick = toggleBlurb
-        document.getElementById("showmore").onclick = toggleMore
-
-        let sbx =  document.getElementById("sketch-box")
-        let rect = sbx.getBoundingClientRect()
-        runSketch(rect.width, rect.height * 0.99, getNumSpots(), sbx)
-      })
-    </script>
-
+    <script  src="./page.js" type="module"></script>
 </head>
 <body>
   <div id="topbar">
@@ -76,27 +25,36 @@
       <input type="button" id="refreshbtn" value="Refresh"/>
     </form>
   </div>
-    <div id="sketch-box">
-      <!-- <div id="sketch-box" /> -->
-      <div class="overlay" id="blurb">
-        <div id="blurbtext">
-          <p>
-            This kinetic image is my simple homage to 
-            <a href="https://en.wikipedia.org/wiki/Yayoi_Kusama"target="_blank" rel="noopener noreferrer">Yayoi Kusama</a> 
-            who died on the 14th August 2026, inspired by my visit to her 2012 exhibition at Tate Modern.
-          </p>
-          <p>
-            The spots you see are connected through a mesh of invisible elastic. Drag one from its resting position and it will 
-            twang back, creating a disturbance in its neighbours which eventually propagates over the entire mesh.
-          </p>
-          <p>Bigger spots are heavier and more sluggish in their movements, but they also have a bigger effect on those around.</p>
-          <p>
-            Your inner child will be excited to drag a spot to a far corner and marvel at the chaos as it catapults 
-            across the screen. The more contemplative you may find more subtle disturbances restful, even hypnotic.
-          </p>
-        </div>
-        <div id="blurbclose" class="material-symbols-outlined md-light">close</div>
+  <div id="qrcode">
+      <span id="qrclose" class="material-symbols-outlined">close</span>
+      <img id="qrimage" src="assets/custom-qr.svg" role="img"/>
+  </div>
+
+  <div id="sketch-box">
+    <!-- <div id="sketch-box" /> -->
+    <div class="overlay" id="blurb">
+      <div id="blurbtext">
+        <p>
+          This kinetic image is my simple homage to 
+          <a href="https://en.wikipedia.org/wiki/Yayoi_Kusama"target="_blank" rel="noopener noreferrer">Yayoi Kusama</a> 
+          who died on the 14th August 2026, inspired by my visit to her 2012 exhibition at Tate Modern.
+        </p>
+        <p>
+          The spots you see are connected through a mesh of invisible elastic. Drag one from its resting position and it will 
+          twang back, creating a disturbance in its neighbours which eventually propagates over the entire mesh.
+        </p>
+        <p>Bigger spots are heavier and more sluggish in their movements, but they also have a bigger effect on those around.</p>
+        <p>
+          Your inner child will be excited to drag a spot to a far corner and marvel at the chaos as it catapults 
+          across the screen. The more contemplative you may find more subtle disturbances restful, even hypnotic.
+        </p>
+        <!-- <button id=""qrbutton>QR code</button> -->
+        <!-- <img src="assets/custom-qr.svg" role="img"/> -->
       </div>
+
+      <button id="qrbutton">QR</button>
+      <div id="blurbclose" class="material-symbols-outlined md-light">close</div>
     </div>
+  </div>
 </body>
 </html>

@@ -117,3 +117,46 @@ h1 span {
     left: 0;
     top: 0;
 }
+
+#qrbutton {
+    border-radius: 20%;
+    width: 30px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#qrcode {
+    z-index: 3;
+    background-color: white;
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+#qrclose {
+    position: absolute;
+    color: black;
+    font-size: 2em;
+    left: 10px;
+    top: 10px;
+}
+
+@media (orientation: landscape) {
+    #qrimage {
+        display: block;
+        margin: auto;
+        height: 80%;
+        top: 20%;
+    }
+}
+@media (orientation: portrait) {
+    #qrimage {
+        display: block;
+        position: relative;
+        top: 20%;
+        margin: auto;
+        width: 80%;
+    }
+}
