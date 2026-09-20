@@ -37,12 +37,17 @@
         }
       }
 
+      function getNumSpots() {
+          return Number(document.getElementById("numspots").value)
+      }
+
       window.addEventListener ("load", (evt) => {
 
         document.getElementById("refreshbtn").onclick = () => {
-          let n = document.getElementById("numspots").value
+          // let n = document.getElementById("numspots").value
           toggleMore()
-          restartSketch(Number(n))
+          // restartSketch(Number(n))
+          restartSketch(getNumSpots())
         }
 
         document.getElementById("blurbclose").onclick = toggleBlurb
@@ -51,7 +56,7 @@
 
         let sbx =  document.getElementById("sketch-box")
         let rect = sbx.getBoundingClientRect()
-        runSketch(rect.width, rect.height * 0.99, sbx)
+        runSketch(rect.width, rect.height * 0.99, getNumSpots(), sbx)
       })
     </script>
 

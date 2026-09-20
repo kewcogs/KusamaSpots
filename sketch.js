@@ -11,7 +11,7 @@ export function restartSketch(n) {
     spots = []
 }
 
-export function runSketch(w, h, parentNode = null){
+export function runSketch(w, h, n, parentNode = null){
     
     const sketch  = (p) => {
         let engine;
@@ -19,6 +19,7 @@ export function runSketch(w, h, parentNode = null){
         // let pressStart = 0
 
         p.setup = () => {
+            dim = n
             engine = Engine.create({gravity:{scale: 0}})
             if (parentNode != null){
                 let canv = p.createCanvas(w, h);
